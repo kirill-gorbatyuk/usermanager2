@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html layout:decorator="default" lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>Users List</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.13/css/jquery.dataTables.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>User List</h1>
+    <table id="table_users" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>NAME</th>
+            <th>AGE</th>
+            <th>ADDRESS</th>
+            <th>DELETE</th>
+            <th>EDIT</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.age}"></td>
+            <td th:text="${user.address}"></td>
+            <td><a th:href="'/delete/' + ${user.id}">Delete</a></td>
+            <td><a th:href="'/edit/' + ${user.id}">Edit</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h1>Add User</h1>
+    <div class="container">
+        <form id="customerForm" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="name">Name: </label>
+                <div class="col-sm-4">
+                    <input class="form-control" id="name" name="name" type="text"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="age">Age: </label>
+                <div class="col-sm-4">
+                    <input class="form-control" id="age" name="age" type="number"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="address">Address: </label>
+                <div class="col-sm-4">
+                    <input class="form-control" id="address" name="address" type="text"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input class="btn btn-success" type="submit" value="Add"/>
+                    <input class="btn btn-warning" type="reset" value="Reset"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!--<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" charset="utf8" src="/webjars/datatables/1.10.13/js/jquery.dataTables.js"></script>-->
+<!--<script type="text/javascript" charset="utf8" src="/webjars/datatables/1.10.13/js/dataTables.bootstrap.min.js"></script>-->
+<th:block layout:fragment="scripts">
+    <script>
+        $(document).ready(function () {
+            $('#table_users').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#customerForm").submit(function (event) {
+                // Prevent the form from submitting via the browser.
+                event.preventDefault();
+                ajaxPost();
+                reload();
+            });
+
+
+            function ajaxPost() {
+
+                // PREPARE FORM DATA
+                var formData = {
+                    name: $("#name").val(),
+                    age: $("#age").val(),
+                    address: $("#address").val()
+                };
+
+                // DO POST
+                $.ajax({
+                    type: "post",
+                    contentType: "application/json",
+                    url: "/add",
+                    data: JSON.stringify(formData),
+                    dataType: 'json'
+                });
+
+                // Reset FormData after Posting
+                resetData();
+
+            }
+
+            function resetData() {
+                $("#name").val("");
+                $("#age").val("");
+                $("#address").val("");
+            }
+
+            function reload() {
+                setTimeout(function () {
+                    location.reload();
+                }, 100)
+            }
+        });
+    </script>
+</th:block>
+</body>
+</html>

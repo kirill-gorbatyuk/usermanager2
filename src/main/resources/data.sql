@@ -1,0 +1,1 @@
+INSERT INTO TESTDB.PUBLIC.USER VALUES (null, 'Kirill', 28, 'Kherson')
