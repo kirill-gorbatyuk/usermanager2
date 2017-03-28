@@ -17,7 +17,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/users"}, method = RequestMethod.GET)
     public String getAll(Model model) {
         model.addAttribute("users", this.userService.getAll());
         return "users";
@@ -25,10 +25,8 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String add(@RequestBody User user) {
+    public void add(@RequestBody User user) {
         this.userService.update(user);
-
-        return "success";
     }
 
     @RequestMapping(value = "/delete/{id}")
