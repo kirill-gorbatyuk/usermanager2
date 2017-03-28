@@ -1,70 +1,68 @@
 <!DOCTYPE html>
-<html layout:decorator="default" lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html layout:decorator="default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Users List</title>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/webjars/datatables/1.10.13/css/jquery.dataTables.css"/>
 </head>
 <body>
-<div layout:fragment="content">
-    <h1>User List</h1>
-    <table id="table_users" class="display" cellspacing="0" width="100%">
-        <thead>
-        <tr>
-            <th>NAME</th>
-            <th>AGE</th>
-            <th>ADDRESS</th>
-            <th>DELETE</th>
-            <th>EDIT</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.age}"></td>
-            <td th:text="${user.address}"></td>
-            <td><a th:href="'/delete/' + ${user.id}">Delete</a></td>
-            <td><a th:href="'/edit/' + ${user.id}">Edit</a></td>
-        </tr>
-        </tbody>
-    </table>
-
-
-    <h1>Add User</h1>
-    <div class="container">
-        <form id="customerForm" class="form-horizontal">
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="name">Name: </label>
-                <div class="col-sm-4">
-                    <input class="form-control" id="name" name="name" type="text"/>
+<div class="container">
+    <div layout:fragment="content">
+        <div class="text-center"><h1>User List</h1></div>
+        <div>
+            <table id="table_users" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="text-center">NAME</th>
+                    <th class="text-center">AGE</th>
+                    <th class="text-center">ADDRESS</th>
+                    <th class="text-center">DELETE</th>
+                    <th class="text-center">EDIT</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" th:each="user : ${users}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.age}"></td>
+                    <td th:text="${user.address}"></td>
+                    <td><a th:href="'/delete/' + ${user.id}">Delete</a></td>
+                    <td><a th:href="'/edit/' + ${user.id}">Edit</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center"><h1>Add User</h1></div>
+        <div>
+            <form id="customerForm" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="name">Name: </label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="name" name="name" type="text" th:minlength="1" th:maxlength="15" th:required="required"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="age">Age: </label>
-                <div class="col-sm-4">
-                    <input class="form-control" id="age" name="age" type="number"/>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="age">Age: </label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="age" name="age" type="number" th:min="1" th:max="130" th:required="required"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label" for="address">Address: </label>
-                <div class="col-sm-4">
-                    <input class="form-control" id="address" name="address" type="text"/>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="address">Address: </label>
+                    <div class="col-sm-4">
+                        <input class="form-control" id="address" name="address" type="text" th:minlength="5" th:required="required"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <input class="btn btn-success" type="submit" value="Add"/>
-                    <input class="btn btn-warning" type="reset" value="Reset"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <input class="btn btn-success" type="submit" value="Add"/>
+                        <input class="btn btn-warning" type="reset" value="Reset"/>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
-<!--<script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-<!--<script type="text/javascript" charset="utf8" src="/webjars/datatables/1.10.13/js/jquery.dataTables.js"></script>-->
-<!--<script type="text/javascript" charset="utf8" src="/webjars/datatables/1.10.13/js/dataTables.bootstrap.min.js"></script>-->
+
 <th:block layout:fragment="scripts">
     <script>
         $(document).ready(function () {
@@ -73,7 +71,7 @@
             });
         });
     </script>
-    <script type="text/javascript">
+    <script>
         $(document).ready(function () {
             $("#customerForm").submit(function (event) {
                 // Prevent the form from submitting via the browser.
@@ -93,7 +91,7 @@
                 };
 
                 // DO POST
-                $.ajax({
+                 $.ajax({
                     type: "post",
                     contentType: "application/json",
                     url: "/add",
@@ -115,7 +113,7 @@
             function reload() {
                 setTimeout(function () {
                     location.reload();
-                }, 100)
+                }, 500)
             }
         });
     </script>
