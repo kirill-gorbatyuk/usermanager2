@@ -33,7 +33,7 @@
         </div>
         <div class="text-center"><h1>Add User</h1></div>
         <div>
-            <form id="customerForm" class="form-horizontal">
+            <form id="userForm" class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="name">Name: </label>
                     <div class="col-sm-4">
@@ -73,7 +73,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            $("#customerForm").submit(function (event) {
+            $("#userForm").submit(function (event) {
                 // Prevent the form from submitting via the browser.
                 event.preventDefault();
                 ajaxPost();
