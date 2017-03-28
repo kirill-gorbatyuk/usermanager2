@@ -2,16 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <title>default title for my pages</title>
-    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/webjars/datatables/1.10.13/css/jquery.dataTables.css"/>
     <link rel="stylesheet" href="/webjars/1.10.13/css/jquery.dataTables.css"/>
 </head>
 <body>
 <div class="container">
+    <div class="page-header"><img height="150" width="1200" style="overflow: hidden; position: relative; display: block"
+                                  src="https://www.indigoextra.com/web/styles/1200x300/public/transport-vector-website-header.jpg?itok=P38kSnC_"/>
+    </div>
     <div layout:fragment="content">
-        Page content goes here
     </div>
 </div>
 <script type="text/javascript" src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
