@@ -37,19 +37,22 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="name">Name: </label>
                     <div class="col-sm-4">
-                        <input class="form-control" id="name" name="name" type="text" th:minlength="1" th:maxlength="15" th:required="required"/>
+                        <input class="form-control" id="name" name="name" type="text" th:minlength="1" th:maxlength="15"
+                               th:required="required"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="age">Age: </label>
                     <div class="col-sm-4">
-                        <input class="form-control" id="age" name="age" type="number" th:min="1" th:max="130" th:required="required"/>
+                        <input class="form-control" id="age" name="age" type="number" th:min="1" th:max="130"
+                               th:required="required"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="address">Address: </label>
                     <div class="col-sm-4">
-                        <input class="form-control" id="address" name="address" type="text" th:minlength="5" th:required="required"/>
+                        <input class="form-control" id="address" name="address" type="text" th:minlength="5"
+                               th:required="required"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -64,20 +67,13 @@
 </div>
 
 <th:block layout:fragment="scripts">
-    <script>
-        $(document).ready(function () {
-            $('#table_users').DataTable({
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-            });
-        });
-    </script>
-    <script>
+    <script type="text/javascript" src="http://127.0.0.1:8887/src/main/resources/static/datatable.js"></script>
+    <script type="text/javascript">
         $(document).ready(function () {
             $("#userForm").submit(function (event) {
                 // Prevent the form from submitting via the browser.
                 event.preventDefault();
                 ajaxPost();
-                reload();
             });
 
 
@@ -91,13 +87,33 @@
                 };
 
                 // DO POST
-                 $.ajax({
+                $.ajax({
                     type: "post",
                     contentType: "application/json",
                     url: "/add",
                     data: JSON.stringify(formData),
-                    dataType: 'json'
+                    dataType: 'json',
+                    success: addData()
                 });
+
+                function addData() {
+                    var delRow = '<td><a>Delete</a></td>';
+                    var editRow = '<td><a>Edit</a></td>';
+
+                    var rowAdded = $('#table_users').DataTable()
+                        .row.add(
+                        [
+                            formData.name,
+                            formData.age,
+                            formData.address,
+                            $(delRow).find('a').attr('href', '/delete/${user.id}'),
+                            $(editRow).find('a').attr('href', '/edit/${user.id}')
+                        ]
+                    ).draw(false).node();
+
+                    $(rowAdded).addClass('text-center');
+                }
+
 
                 // Reset FormData after Posting
                 resetData();
@@ -108,12 +124,6 @@
                 $("#name").val("");
                 $("#age").val("");
                 $("#address").val("");
-            }
-
-            function reload() {
-                setTimeout(function () {
-                    location.reload();
-                }, 500)
             }
         });
     </script>
