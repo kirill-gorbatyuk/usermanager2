@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html layout:decorator="default" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title th:text="'Edit ' + ${user.name}"></title>
+</head>
+<body>
+    <div class="container">
+        <div layout:fragment="content">
+            <div>
+                <form class="form-horizontal" id="editForm" th:action="@{/update}" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <input class="form-control" id="id" name="id" type="hidden" th:value="${user.id}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="name">Name: </label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="name" name="name" type="text" th:minlength="1" th:maxlength="15" th:required="required" th:value="${user.name}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="age">Age: </label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="age" name="age" type="number" th:min="1" th:max="130" th:required="required" th:value="${user.age}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="address">Address: </label>
+                        <div class="col-sm-4">
+                            <input class="form-control" id="address" name="address" type="text" th:minlength="5" th:required="required" th:value="${user.address}"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-10">
+                            <input class="btn btn-success" type="submit" value="Edit"/>
+                            <input class="btn btn-warning" type="reset" value="Reset"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
