@@ -92,28 +92,24 @@
                     contentType: "application/json",
                     url: "/add",
                     data: JSON.stringify(formData),
-                    dataType: 'json',
-                    success: addData()
-                });
-
-                function addData() {
-                    var delRow = '<td><a>Delete</a></td>';
-                    var editRow = '<td><a>Edit</a></td>';
+                    dataType: 'text'
+                }).done(function (data, textStatus, jqXHR) {
+                    var delRow = '<td><a href="/delete/' + jqXHR.responseText + '">Delete</a></td>';
+                    var editRow = '<td><a href="/edit/' + jqXHR.responseText + '">Edit</a></td>';
 
                     var rowAdded = $('#table_users').DataTable()
                         .row.add(
-                        [
-                            formData.name,
-                            formData.age,
-                            formData.address,
-                            $(delRow).find('a').attr('href', '/delete/${user.id}'),
-                            $(editRow).find('a').attr('href', '/edit/${user.id}')
-                        ]
-                    ).draw(false).node();
+                            [
+                                formData.name,
+                                formData.age,
+                                formData.address,
+                                delRow,
+                                editRow
+                            ]
+                        ).draw(false).node();
 
                     $(rowAdded).addClass('text-center');
-                }
-
+                });
 
                 // Reset FormData after Posting
                 resetData();
