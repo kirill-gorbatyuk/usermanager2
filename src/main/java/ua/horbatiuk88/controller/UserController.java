@@ -24,9 +24,11 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public void add(@RequestBody User user) {
-        this.userService.update(user);
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+    public String add(@RequestBody User user) {
+        Long userId = this.userService.update(user);
+
+        return String.valueOf(userId);
     }
 
     @RequestMapping(value = "/delete/{id}")
